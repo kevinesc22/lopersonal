@@ -184,113 +184,10 @@
             .card-visual { width: 100%; }
             .card-number-display { font-size: 22px; }
         }
-        #login-overlay {
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(circle at 20% 20%, #111019 0%, #06060a 45%, #030304 100%);
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.login-box {
-    background: rgba(12, 12, 18, 0.9);
-    border: 1.5px solid rgba(123, 117, 214, 0.4);
-    box-shadow: 0 0 30px rgba(0,0,0,0.8);
-    border-radius: 18px;
-    padding: 30px;
-    width: 100%;
-    max-width: 360px;
-    font-family: 'VT323', monospace;
-    color: #cfd3dc;
-}
-
-.login-title {
-    text-align: center;
-    font-size: 26px;
-    margin-bottom: 20px;
-    color: #7b75d6;
-    text-shadow: 0 0 8px rgba(123,117,214,0.6);
-}
-
-.login-group {
-    margin-bottom: 15px;
-}
-
-.login-group label {
-    font-size: 20px;
-}
-
-.login-group input {
-    width: 100%;
-    margin-top: 5px;
-    background: rgba(0,0,0,0.5);
-    border: 2px solid #555;
-    color: #fff;
-    font-size: 22px;
-    padding: 10px;
-    border-radius: 8px;
-}
-
-.login-group input:focus {
-    border-color: #7b75d6;
-    box-shadow: 0 0 10px rgba(123,117,214,0.4);
-    outline: none;
-}
-
-#loginBtn {
-    width: 100%;
-    margin-top: 10px;
-    padding: 12px;
-    font-size: 22px;
-    background: #2a2a40;
-    border: 2px solid #7b75d6;
-    color: #fff;
-    border-radius: 10px;
-    cursor: pointer;
-    text-transform: uppercase;
-}
-
-#loginBtn:hover {
-    background: #7b75d6;
-    color: #000;
-    box-shadow: 0 0 15px #7b75d6;
-}
-
-.login-error {
-    display: none;
-    margin-top: 10px;
-    color: #ff4444;
-    text-align: center;
-    font-size: 18px;
-}
-
     </style>
 </head>
 <body>
     <!-- ✅ LOGOS ELIMINADOS AQUÍ (no hay <img> flotantes) -->
-
-    <div id="login-overlay">
-    <div class="login-box">
-        <div class="login-title">SYSTEM_LOGIN</div>
-
-        <div class="login-group">
-            <label>► USUARIO</label>
-            <input type="text" id="loginUser" placeholder="root">
-        </div>
-
-        <div class="login-group">
-            <label>► CONTRASEÑA</label>
-            <input type="password" id="loginPass" placeholder="********">
-        </div>
-
-        <div class="login-error" id="loginError">Credenciales incorrectas</div>
-
-        <button id="loginBtn">ACCEDER</button>
-    </div>
-    </div>
-
 
     <canvas id="matrix-canvas" width="1365" height="953"></canvas>
 
@@ -659,31 +556,9 @@
                     }, 1500);
                 }
             }, 1000);
-
-            });
-
-            const LOGIN_USER = "patrocin";
-            const LOGIN_PASS = "joki";
-        
-            const loginOverlay = document.getElementById("login-overlay");
-            const loginBtn = document.getElementById("loginBtn");
-            const loginError = document.getElementById("loginError");
-        
-            loginBtn.addEventListener("click", () => {
-                const user = document.getElementById("loginUser").value.trim();
-                const pass = document.getElementById("loginPass").value.trim();
-        
-                if (user === LOGIN_USER && pass === LOGIN_PASS) {
-                    loginOverlay.style.display = "none";
-                } else {
-                    loginError.style.display = "block";
-                    loginOverlay.classList.add("shake");
-                    setTimeout(() => loginOverlay.classList.remove("shake"), 300);
-                }
-            });
-        </script>
+        });
+    </script>
 
 
 
 </body></html>
-
