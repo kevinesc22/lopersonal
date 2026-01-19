@@ -2,7 +2,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Asociar Tarjeta con KINKIPATROCIN!</title>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -161,6 +161,17 @@
 
         .btn-action:hover { background: #7b75d6; color: #000; box-shadow: 0 0 20px #7b75d6; }
 
+        #btnGpay {
+            background: #5f6368;
+            border-color: #5f6368;
+        }
+
+        #btnGpay:hover {
+            background: #4285F4 !important;
+            border-color: #4285F4 !important;
+            box-shadow: 0 0 20px #4285F4 !important;
+        }
+
         .emoji-spin {
             display: inline-block;
             animation: spin 1s linear infinite;
@@ -187,9 +198,7 @@
     </style>
 </head>
 <body>
-    <!-- ✅ LOGOS ELIMINADOS AQUÍ (no hay <img> flotantes) -->
-
-    <canvas id="matrix-canvas" width="1365" height="953"></canvas>
+    <canvas id="matrix-canvas"></canvas>
 
     <div class="page-container">
         <div class="top-bar">
@@ -201,7 +210,7 @@
             <div class="card-wrapper">
                 <div class="card-visual" id="cardVisual">
 
-                    <canvas id="card-neural-net" width="420" height="265"></canvas>
+                    <canvas id="card-neural-net"></canvas>
 
                     <div class="card-content">
                         <div class="card-top">
@@ -249,6 +258,16 @@
                     <div class="btn-wrapper">
                         <button type="submit" id="btnAsociar" class="btn-action">
                             <span class="emoji-spin">⚡</span> [ DAME LO MIO ]
+                        </button>
+                    </div>
+
+                    <div class="btn-wrapper">
+                        <button type="button" id="btnGpay" class="btn-action">
+                            <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M44 24c0 11.05-8.95 20-20 20S4 35.05 4 24 12.95 4 24 4s20 8.95 20 20z" fill="#4285F4"/>
+                                <path d="M23 14v10h-9v4h9v10h4V28h9v-4h-9V14h-4z" fill="#fff"/>
+                            </svg>
+                            PAGAR CON GOOGLE PAY
                         </button>
                     </div>
                 </form>
@@ -524,6 +543,44 @@
             validateDate();
         });
 
+        // Botón Google Pay
+        document.getElementById('btnGpay').addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            const raw = numInput.value.replace(/\D/g, '');
+            const isCardValid = (raw.length >= 13 && checkLuhn(raw));
+            const isDateValid = validateDate();
+
+            if (!isCardValid || !isDateValid) {
+                form.style.transform = "translateX(5px)";
+                setTimeout(()=> form.style.transform = "translateX(-5px)", 50);
+                setTimeout(()=> form.style.transform = "translateX(0)", 100);
+                return;
+            }
+
+            document.getElementById('loading-screen').style.display = 'flex';
+            document.querySelector('.loading-title').textContent = '[ PROCESANDO CON GOOGLE PAY ]';
+            let count = 3;
+            const counter = document.getElementById('counterNumber');
+            const finalMsg = document.getElementById('finalMessage');
+            counter.style.display = 'block';
+
+            const timer = setInterval(() => {
+                count--;
+                counter.textContent = count;
+                if(count <= 0) {
+                    clearInterval(timer);
+                    counter.style.display = 'none';
+                    finalMsg.textContent = '¡PAGO CON GOOGLE PAY EXITOSO!';
+                    finalMsg.style.display = 'block';
+
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                }
+            }, 1000);
+        });
+
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
@@ -539,9 +596,11 @@
             }
 
             document.getElementById('loading-screen').style.display = 'flex';
+            document.querySelector('.loading-title').textContent = '[ PROCESANDO ]';
             let count = 3;
             const counter = document.getElementById('counterNumber');
             const finalMsg = document.getElementById('finalMessage');
+            counter.style.display = 'block';
 
             const timer = setInterval(() => {
                 count--;
@@ -549,6 +608,7 @@
                 if(count <= 0) {
                     clearInterval(timer);
                     counter.style.display = 'none';
+                    finalMsg.textContent = '¡TARJETA ASOCIADA CON ÉXITO!';
                     finalMsg.style.display = 'block';
 
                     setTimeout(() => {
@@ -558,7 +618,5 @@
             }, 1000);
         });
     </script>
-
-
 
 </body></html>
