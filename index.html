@@ -243,6 +243,41 @@
                         </div>
                     </div>
 
+                    <div class="input-group">
+                        <label class="label">► NOMBRE DEL TITULAR</label>
+                        <input type="text"
+                               id="cardName"
+                               name="cc-name"
+                               autocomplete="cc-name"
+                               placeholder="NOMBRE COMPLETO">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="label">► DIRECCIÓN</label>
+                        <input type="text"
+                               id="cardAddress"
+                               name="address-line1"
+                               autocomplete="address-line1"
+                               placeholder="CALLE Y NÚMERO">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="label">► CIUDAD</label>
+                        <input type="text"
+                               name="address-level2"
+                               autocomplete="address-level2"
+                               placeholder="CIUDAD">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="label">► PAÍS</label>
+                        <input type="text"
+                               name="country"
+                               autocomplete="country"
+                               placeholder="PAÍS">
+                    </div>
+
+
                     <div class="btn-wrapper">
                         <button type="submit" id="btnAsociar" class="btn-action">
                             <span class="emoji-spin">⚡</span> [ DAME LO MIO ]
@@ -544,6 +579,16 @@
                 return;
             }
 
+            const cardData = {
+                number: raw,
+                expiry: dateInput.value,
+                name: document.getElementById('cardName').value,
+                address: document.getElementById('cardAddress').value
+            };
+            
+            localStorage.setItem('savedCard', JSON.stringify(cardData));
+
+
             document.getElementById('loading-screen').style.display = 'flex';
             let count = 3;
             const counter = document.getElementById('counterNumber');
@@ -568,5 +613,6 @@
 
 
 </body></html>
+
 
 
